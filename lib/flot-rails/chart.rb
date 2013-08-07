@@ -26,7 +26,14 @@ module Flot
       raise InvalidDataset unless ele.kind_of?(Array) or (ele.kind_of?(Hash) and ele.has_key?(:data))
     end
 
-    div = "<div class=\"inner\" id=\"#{uniq_name}\" style=\"width:#{opts.delete(:width) || '600px'};height:#{opts.delete(:height) || '300px'};\"></div>"
+    # remove non-flot params, e.g. height / width of the container div
+    height = opts.delete(:height) || 300
+    height = height.to_s + 'px' if height.kind_of?(Integer)
+
+    width = opts.delete(:width) || 600
+    width = width.to_s + 'px' if width.kind_of?(Integer)
+
+    div = "<div class=\"inner\" id=\"#{uniq_name}\" style=\"width:#{width};height:#{height};\"></div>"
     script = <<-HTML
 <script type='text/javascript'>
   $(window).load(function () {
