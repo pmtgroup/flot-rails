@@ -40,16 +40,31 @@ module Flot
     div = "<div class=\"inner\" id=\"#{uniq_name}\" style=\"width:#{width};height:#{height};\"></div>"
     script = <<-HTML
 <script type='text/javascript'>
-  var flotRailsReady = function(){
-    var showGraph = function(selector, data, options){
-      var placeholder = $(selector);
-      placeholder.css("font-size", "13px"); // this is bullshit
-      $.plot(placeholder, data, options);
+  (function(){
+    var flotRailsReady = function(){
+      var graphAttempts = 0, graphAttemptLimit = 20;
+      var showGraph = function(selector, data, options){
+        var placeholder = $(selector);
+        if (placeholder.length > 0) {
+          $.plot(placeholder, data, options);
+        }
+        else {
+          graphAttempts++;
+          if (graphAttempts < graphAttemptLimit) {
+            setTimeout(function(){
+              showGraph(selector, data, options);
+            }, 100);
+          }
+          else {
+            console.log("flot-rails: Could not find graph container " + selector);
+          }
+        }
+      };
+      showGraph("##{uniq_name}", #{dataset_processed}, #{options_processed});
     };
-    showGraph("##{uniq_name}", #{dataset_processed}, #{options_processed});
-  };
-  $(document).ready(flotRailsReady);
-  $(document).on('page:load', flotRailsReady);
+    $(document).ready(flotRailsReady);
+    $(document).on('page:load', flotRailsReady);
+  })();
 </script>
     HTML
 
