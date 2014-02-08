@@ -40,7 +40,7 @@ module Flot
 
     div = "<div class=\"inner\" id=\"#{uniq_name}\" style=\"width:#{width};height:#{height};\"></div>"
     script = <<-HTML
-<script type='text/javascript'>
+<script type='text/javascript' data-turbolinks-track="true">
   (function(){
     var flotRailsReady = function(){
       var graphAttempts = 0, graphAttemptLimit = 20;
