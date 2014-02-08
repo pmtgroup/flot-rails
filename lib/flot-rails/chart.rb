@@ -19,6 +19,7 @@ module Flot
 
     split_flag = opts.delete(:split)
     uniq_name = opts.delete(:uniq_name) || [opts.delete(:prefix), :chart, dataset.join.hash.abs.to_s].compact.join('_')
+    opts.delete(:prefix) # in case of emergency
 
     # dataset will be some kind of tripple nested arrays or an array of hashes with an 2-dimensional-array data-element
     raise InvalidDataset, dataset.inspect unless dataset.kind_of?(Array)
