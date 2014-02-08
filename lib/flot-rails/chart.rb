@@ -47,6 +47,7 @@ module Flot
       var showGraph = function(selector, data, options){
         var placeholder = $(selector);
         if (placeholder.length > 0) {
+          placeholder.children().remove();
           $.plot(placeholder, data, options);
         }
         else {
