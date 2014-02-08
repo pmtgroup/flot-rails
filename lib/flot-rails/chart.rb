@@ -33,12 +33,23 @@ module Flot
     width = opts.delete(:width) || 600
     width = width.to_s + 'px' if width.kind_of?(Integer)
 
+    dataset_processed = dataset.to_json.gsub("\\\"", "\"")
+    options_processed = {}
+    options_processed = (opts.to_s.gsub(/:(\w*)=>/, '\1: ')) unless opts.empty? 
+
     div = "<div class=\"inner\" id=\"#{uniq_name}\" style=\"width:#{width};height:#{height};\"></div>"
     script = <<-HTML
 <script type='text/javascript'>
-  $(window).load(function () {
-    $.plot($("##{uniq_name}"), #{dataset.to_s.gsub(/:(\w*)=>/, '\1: ').gsub(/(\[|\{)(\[|\{)/, '\1' + "\n" + '\2  ').gsub(/],/, "],\n")}#{(', ' + opts.to_s.gsub(/:(\w*)=>/, '\1: ')) unless opts.empty? } );
-  });
+  var flotRailsReady = function(){
+    var showGraph = function(selector, data, options){
+      var placeholder = $(selector);
+      placeholder.css("font-size", "13px"); // this is bullshit
+      $.plot(placeholder, data, options);
+    };
+    showGraph("##{uniq_name}", #{dataset_processed}, #{options_processed});
+  };
+  $(document).ready(flotRailsReady);
+  $(document).on('page:load', flotRailsReady);
 </script>
     HTML
 
