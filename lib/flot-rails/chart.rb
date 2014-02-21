@@ -1,12 +1,12 @@
 module Flot
   class InvalidDataset < RuntimeError; end
 
-  BaseOpts = {
+  BASE_OPTS = {
     :bar => {bars: {show: true}, prefix: :bar},
     :line => {lines: {show: true}, prefix: :line},
     :point => {points: {show: true}, prefix: :point},
     :pie => {series: {pie: {show: true}}, prefix: :pie}
-  };
+  }
 
   def on_click
   end
@@ -84,7 +84,7 @@ module Flot
 
   def self.chart_type(name)
     define_method [name, 'chart'].join('_') do |ds, opts={}|
-      chart(ds, BaseOpts[name].merge(opts))
+      chart(ds, BASE_OPTS[name].merge(opts))
     end
   end
 
