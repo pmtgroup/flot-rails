@@ -1,7 +1,7 @@
+//= require excanvas.min
 //= require jquery.flot.pie
 //= require jquery.flot.crosshair
 //= require jquery.flot.fillbetween
-//= require excanvas
 //= require jquery.flot.all
 //= require jquery.flot.image
 //= require jquery.flot
@@ -9,7 +9,6 @@
 //= require jquery.flot.selection
 //= require jquery.flot.stack
 //= require jquery.flot.resize
-//= require excanvas.min
 //= require jquery.flot.navigate
 //= require jquery.flot.symbol
 //= require jquery.colorhelpers
