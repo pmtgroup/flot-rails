@@ -1,13 +1,14 @@
 # -*- encoding : utf-8 -*-
 
 module Flot
-  class InvalidDataset < RuntimeError; end
+  class InvalidDataset < RuntimeError
+  end
 
   BASE_OPTS = {
-    :bar => {bars: {show: true}, prefix: :bar},
-    :line => {lines: {show: true}, prefix: :line},
-    :point => {points: {show: true}, prefix: :point},
-    :pie => {series: {pie: {show: true}}, prefix: :pie}
+      :bar => {bars: {show: true}, prefix: :bar},
+      :line => {lines: {show: true}, prefix: :line},
+      :point => {points: {show: true}, prefix: :point},
+      :pie => {series: {pie: {show: true}}, prefix: :pie}
   }
 
   def on_click
@@ -25,20 +26,21 @@ module Flot
 
     # dataset will be some kind of tripple nested arrays or an array of hashes with an 2-dimensional-array data-element
     raise InvalidDataset, dataset.inspect unless dataset.kind_of?(Array)
+
     dataset.each do |ele|
       raise InvalidDataset unless ele.kind_of?(Array) or (ele.kind_of?(Hash) and ele.has_key?(:data))
     end
 
     # remove non-flot params, e.g. height / width of the container div
-    height = opts.delete(:height) || 300
+    height = opts.delete(:height) || Flot.config.default_height
     height = height.to_s + 'px' if height.kind_of?(Integer)
 
-    width = opts.delete(:width) || 600
+    width = opts.delete(:width) || Flot.config.default_width
     width = width.to_s + 'px' if width.kind_of?(Integer)
 
     dataset_processed = dataset.to_json.gsub("\\\"", "\"")
     options_processed = {}
-    options_processed = (opts.to_s.gsub(/:(\w*)=>/, '\1: ')) unless opts.empty? 
+    options_processed = (opts.to_s.gsub(/:(\w*)=>/, '\1: ')) unless opts.empty?
 
     div = "<div class=\"inner\" id=\"#{uniq_name}\" style=\"width:#{width};height:#{height};\"></div>"
     script = <<-HTML
@@ -81,7 +83,9 @@ module Flot
   end
 
   def yield_chart_script_at(yield_tag)
-    content_for yield_tag do raw @__chart_script_content.join end
+    content_for yield_tag do
+      raw @__chart_script_content.join
+    end
   end
 
   def self.chart_type(name)

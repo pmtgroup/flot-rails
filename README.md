@@ -53,3 +53,16 @@ and append a yield in your layout's head:
   <%= yield :flot %>
 </head>
 ```
+
+### Configuration ###
+
+You can configure the following values by using `Flot.configure` method.
+
+```ruby
+Flot.configure do |config|
+  # Default height for plot-block.
+  config.default_height = 300 # px
+  # Default width for plot-block.
+  config.default_width  = 600 # px
+end
+```
