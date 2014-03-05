@@ -13,7 +13,8 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = '>= 1.3.6'
   s.add_dependency 'jquery-rails', '>= 2.0.2'
-  
+  s.add_development_dependency 'rake', ['>= 0']
+
   s.files        = `git ls-files`.split("\n")
   s.executables  = `git ls-files -- bin/*`.split("\n").map { |f| File.basename(f) }
   s.require_path = 'lib'
