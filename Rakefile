@@ -1,7 +1,5 @@
 # -*- encoding : utf-8 -*-
-# -*- ruby -*-
 
-# require 'rubygems'
 # require "bundler/gem_tasks"
 require 'tempfile'
 
