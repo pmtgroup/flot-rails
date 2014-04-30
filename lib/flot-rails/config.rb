@@ -8,7 +8,7 @@ module Flot
   #     config.default_height = 400 # px
   #   end
   def self.configure(&block)
-    yield @config ||= Flot::Configuration.new
+    yield @config ||= self::Configuration.new
   end
 
   # Global settings for Flot
