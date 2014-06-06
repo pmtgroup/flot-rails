@@ -2,3 +2,4 @@
 !excanvas.min.js
 *.gem
 *.*~
+Gemfile.lock
